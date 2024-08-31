@@ -1,0 +1,284 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\MUSKAN> mongosh
+Current Mongosh Log ID: 66d37998e5db2732502710bb
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.3.0
+Using MongoDB:          7.0.14
+Using Mongosh:          2.3.0
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2024-08-30T13:11:57.803+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> show dbs
+admin    40.00 KiB
+config  108.00 KiB
+local    72.00 KiB
+test> use chitkara
+switched to db chitkara
+chitkara> db.createCollection("user")
+{ ok: 1 }
+chitkara> db.createCollection("faculty")
+{ ok: 1 }
+chitkara> db.createCollection("students")
+{ ok: 1 }
+chitkara> db.user.insertMany([
+... { name:"muskan", age:20,subject:"chemistry",marks:99},
+... { name:"piyush", age:20,subject:"physics",marks:95},
+... { name:"john", age:18,subject:"maths",marks:45},
+... { name:"collins", age:21,subject:"english",marks:82},
+... { name:"raphel", age:17,subject:"physics",marks:30}
+... ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('66d37c7fe5db2732502710bc'),
+    '1': ObjectId('66d37c7fe5db2732502710bd'),
+    '2': ObjectId('66d37c7fe5db2732502710be'),
+    '3': ObjectId('66d37c7fe5db2732502710bf'),
+    '4': ObjectId('66d37c7fe5db2732502710c0')
+  }
+}
+chitkara> db.faculty.insertMany([
+... db.user.insertMany([ { name: "muskan", age: 20, subject: "chemistry", marks: 99 }, { name: "piyush", age: 20, subject: "physics", marks: 95 }, { name: "john", age: 18, subject: "maths", marks: 45 }, { name: "collins", age: 21, subject: "english", marks: 82 }, { name: "raphel", age: 17, subject: "physics", marks: 30 }] )
+...
+chitkara> db.faculty.insertMany([
+... { name:"monika", age:50,subject:"physics",rating:4.8},
+... { name:"kulbir", age:49,subject:"maths",rating:4.5},
+... { name:"weener", age:35,subject:"english",rating:3},
+... { name:"oliver", age:54,subject:"physics",rating:2.5}
+... ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('66d37d75e5db2732502710c1'),
+    '1': ObjectId('66d37d75e5db2732502710c2'),
+    '2': ObjectId('66d37d75e5db2732502710c3'),
+    '3': ObjectId('66d37d75e5db2732502710c4')
+  }
+}
+chitkara> db.students.insertMany([
+... { name:"frank",age:26,subject:"maths",marks:56},
+... { name:"jolly",age:29,subject:"physics",marks:79},
+... { name:"warner",age:18,subject:"english",marks:96},
+... { name:"keiper",age:20,subject:"chemistry",marks:24}
+... ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('66d37e58e5db2732502710c5'),
+    '1': ObjectId('66d37e58e5db2732502710c6'),
+    '2': ObjectId('66d37e58e5db2732502710c7'),
+    '3': ObjectId('66d37e58e5db2732502710c8')
+  }
+}
+chitkara> db.students.updateMany(
+... {}
+... { $set:{address:"chitkara university"} }
+Uncaught:
+SyntaxError: Unexpected token, expected "," (3:0)
+
+  1 | db.students.updateMany(
+  2 | {}
+> 3 | { $set:{address:"chitkara university"} }
+    | ^
+  4 |
+
+chitkara> db.students.updateMany(
+... {},
+... { $set:{address:"chitkara university"} }
+... )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 4,
+  modifiedCount: 4,
+  upsertedCount: 0
+}
+chitkara> db.students.find()
+[
+  {
+    _id: ObjectId('66d37e58e5db2732502710c5'),
+    name: 'frank',
+    age: 26,
+    subject: 'maths',
+    marks: 56,
+    address: 'chitkara university'
+  },
+  {
+    _id: ObjectId('66d37e58e5db2732502710c6'),
+    name: 'jolly',
+    age: 29,
+    subject: 'physics',
+    marks: 79,
+    address: 'chitkara university'
+  },
+  {
+    _id: ObjectId('66d37e58e5db2732502710c7'),
+    name: 'warner',
+    age: 18,
+    subject: 'english',
+    marks: 96,
+    address: 'chitkara university'
+  },
+  {
+    _id: ObjectId('66d37e58e5db2732502710c8'),
+    name: 'keiper',
+    age: 20,
+    subject: 'chemistry',
+    marks: 24,
+    address: 'chitkara university'
+  }
+]
+chitkara> db.user.find()
+[
+  {
+    _id: ObjectId('66d37c7fe5db2732502710bc'),
+    name: 'muskan',
+    age: 20,
+    subject: 'chemistry',
+    marks: 99
+  },
+  {
+    _id: ObjectId('66d37c7fe5db2732502710bd'),
+    name: 'piyush',
+    age: 20,
+    subject: 'physics',
+    marks: 95
+  },
+  {
+    _id: ObjectId('66d37c7fe5db2732502710be'),
+    name: 'john',
+    age: 18,
+    subject: 'maths',
+    marks: 45
+  },
+  {
+    _id: ObjectId('66d37c7fe5db2732502710bf'),
+    name: 'collins',
+    age: 21,
+    subject: 'english',
+    marks: 82
+  },
+  {
+    _id: ObjectId('66d37c7fe5db2732502710c0'),
+    name: 'raphel',
+    age: 17,
+    subject: 'physics',
+    marks: 30
+  }
+]
+chitkara> db.faculty.find()
+[
+  {
+    _id: ObjectId('66d37d75e5db2732502710c1'),
+    name: 'monika',
+    age: 50,
+    subject: 'physics',
+    rating: 4.8
+  },
+  {
+    _id: ObjectId('66d37d75e5db2732502710c2'),
+    name: 'kulbir',
+    age: 49,
+    subject: 'maths',
+    rating: 4.5
+  },
+  {
+    _id: ObjectId('66d37d75e5db2732502710c3'),
+    name: 'weener',
+    age: 35,
+    subject: 'english',
+    rating: 3
+  },
+  {
+    _id: ObjectId('66d37d75e5db2732502710c4'),
+    name: 'oliver',
+    age: 54,
+    subject: 'physics',
+    rating: 2.5
+  }
+]
+chitkara> db.students.updateMany(
+... {marks: {$gte:67 }},
+... {$set:{grade: "A++"}}
+... )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 2,
+  upsertedCount: 0
+}
+chitkara> db.student.updateMany(
+... {},
+... {$set:{subject:"data science"}}
+chitkara> db.students.updateMany(
+... {$set:{subject:"data science"}}
+... )
+MongoInvalidArgumentError: Update document requires atomic operators
+chitkara> db.students.updateMany(
+... {},
+... {$set:{subject:"data science"}}
+... )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 4,
+  modifiedCount: 4,
+  upsertedCount: 0
+}
+chitkara> db.students.find()
+[
+  {
+    _id: ObjectId('66d37e58e5db2732502710c5'),
+    name: 'frank',
+    age: 26,
+    subject: 'data science',
+    marks: 56,
+    address: 'chitkara university'
+  },
+  {
+    _id: ObjectId('66d37e58e5db2732502710c6'),
+    name: 'jolly',
+    age: 29,
+    subject: 'data science',
+    marks: 79,
+    address: 'chitkara university',
+    grade: 'A++'
+  },
+  {
+    _id: ObjectId('66d37e58e5db2732502710c7'),
+    name: 'warner',
+    age: 18,
+    subject: 'data science',
+    marks: 96,
+    address: 'chitkara university',
+    grade: 'A++'
+  },
+  {
+    _id: ObjectId('66d37e58e5db2732502710c8'),
+    name: 'keiper',
+    age: 20,
+    subject: 'data science',
+    marks: 24,
+    address: 'chitkara university'
+  }
+]
+chitkara> db.faculty.find({name:"monika"})
+[
+  {
+    _id: ObjectId('66d37d75e5db2732502710c1'),
+    name: 'monika',
+    age: 50,
+    subject: 'physics',
+    rating: 4.8
+  }
+]
+chitkara>

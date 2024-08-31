@@ -1,0 +1,259 @@
+1. find data where student has age 22 and marks 90
+2. find student whose marks age more than and marks more than 80 80 both
+3. find students those grades are A+
+
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\MUSKAN> mongosh
+Current Mongosh Log ID: 66d385dcc9b0e306472710bb
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.3.0
+Using MongoDB:          7.0.14
+Using Mongosh:          2.3.0
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2024-08-30T13:11:57.803+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> show dbs
+admin      40.00 KiB
+chitkara  136.00 KiB
+config    108.00 KiB
+local      72.00 KiB
+test> use chitkara
+switched to db chitkara
+chitkara> db.user.find()
+[
+  {
+    _id: ObjectId('66d37c7fe5db2732502710bc'),
+    name: 'muskan',
+    age: 20,
+    subject: 'chemistry',
+    marks: 99
+  },
+  {
+    _id: ObjectId('66d37c7fe5db2732502710bd'),
+    name: 'piyush',
+    age: 20,
+    subject: 'physics',
+    marks: 95
+  },
+  {
+    _id: ObjectId('66d37c7fe5db2732502710be'),
+    name: 'john',
+    age: 18,
+    subject: 'maths',
+    marks: 45
+  },
+  {
+    _id: ObjectId('66d37c7fe5db2732502710bf'),
+    name: 'collins',
+    age: 21,
+    subject: 'english',
+    marks: 82
+  },
+  {
+    _id: ObjectId('66d37c7fe5db2732502710c0'),
+    name: 'raphel',
+    age: 17,
+    subject: 'physics',
+    marks: 30
+  }
+]
+chitkara> db.faculty.find()
+[
+  {
+    _id: ObjectId('66d37d75e5db2732502710c1'),
+    name: 'monika',
+    age: 50,
+    subject: 'physics',
+    rating: 4.8
+  },
+  {
+    _id: ObjectId('66d37d75e5db2732502710c2'),
+    name: 'kulbir',
+    age: 49,
+    subject: 'maths',
+    rating: 4.5
+  },
+  {
+    _id: ObjectId('66d37d75e5db2732502710c3'),
+    name: 'weener',
+    age: 35,
+    subject: 'english',
+    rating: 3
+  },
+  {
+    _id: ObjectId('66d37d75e5db2732502710c4'),
+    name: 'oliver',
+    age: 54,
+    subject: 'physics',
+    rating: 2.5
+  }
+]
+chitkara> db.students.find()
+[
+  {
+    _id: ObjectId('66d37e58e5db2732502710c5'),
+    name: 'frank',
+    age: 26,
+    subject: 'data science',
+    marks: 56,
+    address: 'chitkara university'
+  },
+  {
+    _id: ObjectId('66d37e58e5db2732502710c6'),
+    name: 'jolly',
+    age: 29,
+    subject: 'data science',
+    marks: 79,
+    address: 'chitkara university',
+    grade: 'A++'
+  },
+  {
+    _id: ObjectId('66d37e58e5db2732502710c7'),
+    name: 'warner',
+    age: 18,
+    subject: 'data science',
+    marks: 96,
+    address: 'chitkara university',
+    grade: 'A++'
+  },
+  {
+    _id: ObjectId('66d37e58e5db2732502710c8'),
+    name: 'keiper',
+    age: 20,
+    subject: 'data science',
+    marks: 24,
+    address: 'chitkara university'
+  }
+]
+chitkara> db.students.find({ age: 29, marks: 79 })
+[
+  {
+    _id: ObjectId('66d37e58e5db2732502710c6'),
+    name: 'jolly',
+    age: 29,
+    subject: 'data science',
+    marks: 79,
+    address: 'chitkara university',
+    grade: 'A++'
+  }
+]
+chitkara> db.students.find({ age: { $gt: 80 }, marks: { $gt: 80 } })
+
+chitkara> db.students.find({ age: { $gt: 25 }, marks: { $gt: 25 } })
+[
+  {
+    _id: ObjectId('66d37e58e5db2732502710c5'),
+    name: 'frank',
+    age: 26,
+    subject: 'data science',
+    marks: 56,
+    address: 'chitkara university'
+  },
+  {
+    _id: ObjectId('66d37e58e5db2732502710c6'),
+    name: 'jolly',
+    age: 29,
+    subject: 'data science',
+    marks: 79,
+    address: 'chitkara university',
+    grade: 'A++'
+  }
+]
+chitkara> db.students.find({ grade: "A++" })
+[
+  {
+    _id: ObjectId('66d37e58e5db2732502710c6'),
+    name: 'jolly',
+    age: 29,
+    subject: 'data science',
+    marks: 79,
+    address: 'chitkara university',
+    grade: 'A++'
+  },
+  {
+    _id: ObjectId('66d37e58e5db2732502710c7'),
+    name: 'warner',
+    age: 18,
+    subject: 'data science',
+    marks: 96,
+    address: 'chitkara university',
+    grade: 'A++'
+  }
+]
+chitkara> db.students.find({
+...   $and: [
+...     { age: 22 },
+...     { marks: 90 }
+...   ]
+... })
+
+chitkara> db.students.find({ $and: [ { age: 20 }, { marks: 24 }] })
+[
+  {
+    _id: ObjectId('66d37e58e5db2732502710c8'),
+    name: 'keiper',
+    age: 20,
+    subject: 'data science',
+    marks: 24,
+    address: 'chitkara university'
+  }
+]
+chitkara> db.students.find({
+...   $and: [
+...     { age: { $gt: 25 } },
+...     { marks: { $gt: 25 } }
+...   ]
+... })
+[
+  {
+    _id: ObjectId('66d37e58e5db2732502710c5'),
+    name: 'frank',
+    age: 26,
+    subject: 'data science',
+    marks: 56,
+    address: 'chitkara university'
+  },
+  {
+    _id: ObjectId('66d37e58e5db2732502710c6'),
+    name: 'jolly',
+    age: 29,
+    subject: 'data science',
+    marks: 79,
+    address: 'chitkara university',
+    grade: 'A++'
+  }
+]
+chitkara> db.students.find({
+...   $and: [
+...     { grade: "A++" }
+...   ]
+... })
+[
+  {
+    _id: ObjectId('66d37e58e5db2732502710c6'),
+    name: 'jolly',
+    age: 29,
+    subject: 'data science',
+    marks: 79,
+    address: 'chitkara university',
+    grade: 'A++'
+  },
+  {
+    _id: ObjectId('66d37e58e5db2732502710c7'),
+    name: 'warner',
+    age: 18,
+    subject: 'data science',
+    marks: 100,
+    address: 'chitkara university',
+    grade: 'A++'
+  }
+]
+chitkara>
